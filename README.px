@@ -1,0 +1,18 @@
+# DevilCalculator
+from PIL import Image
+import os
+
+img=Image.open('/mnt/data/a_clean_studio_like_portrait_photograph_overall_s.png').convert('RGB')
+dpi=300
+w_cm,h_cm=2,2.5
+w_px=round(w_cm/2.54*dpi)
+h_px=round(h_cm/2.54*dpi)
+img=img.resize((w_px,h_px))
+out='/mnt/data/passport_photo_2x2.5cm.jpg'
+q=95
+while True:
+    img.save(out,'JPEG',quality=q,dpi=(dpi,dpi),optimize=True)
+    if os.path.getsize(out)<=20*1024 or q<=10:
+        break
+    q-=5
+print(os.path.getsize(out),w_px,h_px,q)
